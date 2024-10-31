@@ -3,16 +3,35 @@ from ultralytics import YOLO
 import cv2
 import pygame
 import threading
+import facebook
+
+def post_image_to_facebook(image_path, message, access_token):
+    # Crear el objeto de GraphAPI
+    graph = facebook.GraphAPI(access_token)
+    
+    # Leer la imagen
+    with open(image_path, "rb") as image_file:
+        # Publicar la imagen con un mensaje
+        graph.put_photo(image=image_file, message=message)
 
 def start_detection_thread():
     detection_thread = threading.Thread(target=run_detection)
     detection_thread.start()
 
-def button_1():
-    print("Hola, soy el boton 1")
+def picture():
+    cap2 = cv2.VideoCapture(1)
+    print("Tomar foto")
+    ret, frame = cap2.read()
+    if ret:
+        cv2.imshow('Captura de Webcam 2', frame)
+        cv2.imwrite("capture_from_webcam_2.png", frame)
+    else:
+        print("No se pudo capturar imagen de la Webcam 2")
+    cap2.release()
 
-def button_2():
-    print("Hola, soy el boton 2")
+def publish():
+    print("¡Vamos a publicar la foto!")
+    #post_image_to_facebook(image_path, message, access_token)
 
 def run_detection():
     cap = cv2.VideoCapture(0)
@@ -59,15 +78,24 @@ def run_detection():
 
 # Configuración de la interfaz gráfica
 root = tk.Tk()
-root.title("Detección con YOLO")
+access_token = 'TU_TOKEN_DE_ACCESO'
+message = '#DíadelITESO #SofIA'
+image_path = 'capture_from_webcam_2.png'
+root.title("SofIA")
+root.geometry("500x400")  # Aumenta el tamaño de la ventana
 
-start_button = tk.Button(root, text="Button 1", command=button_1)
-start_button.pack(pady=10)
+# Crear un frame para centrar los botones
+frame = tk.Frame(root)
+frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-stop_button = tk.Button(root, text="Button 2", command=button_2)
-stop_button.pack(pady=10)
+start_button = tk.Button(frame, text="Tomar foto", command=picture, width=20, height=5)
+start_button.pack(side=tk.LEFT, padx=20)
+
+stop_button = tk.Button(frame, text="Publicar foto", command=publish, width=20, height=5)
+stop_button.pack(side=tk.RIGHT, padx=20)
 
 # Iniciar la detección en un hilo separado
 start_detection_thread()
 
 root.mainloop()
+
