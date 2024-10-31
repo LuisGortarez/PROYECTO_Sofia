@@ -1,0 +1,1 @@
+La carpeta llamada manos contiene los avances previos y algunas otras opciones para sonidos.

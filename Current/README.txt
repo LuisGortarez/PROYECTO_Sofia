@@ -1,0 +1,1 @@
+Para que el programa funcione se requiere Python 3.11.7 a 3.11.9, cambiar los nombres de los audios y sus rutas en el programa y finalmente los pesos dela red son los archivos con terminación .pt
