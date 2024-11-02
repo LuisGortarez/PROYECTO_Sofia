@@ -109,7 +109,7 @@ def run_detection():
 
 # Configuración de la interfaz gráfica
 root = tk.Tk()
-fuente = ("ScriptogramaMarkdownJF", 45)
+fuente = ("Modern No. 20", 45)
 access_token = 'TU_TOKEN_DE_ACCESO'
 message = '#DíadelITESO #SofIA'
 image_path = 'capture_from_webcam_2.png'
