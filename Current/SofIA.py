@@ -54,10 +54,10 @@ def open_publish_window(image):
     button_frame = tk.Frame(publish_window, bg='#6BA4FA')
     button_frame.pack(pady=20)
 
-    publish_button = tk.Button(button_frame, text="Publicar foto", command=publish, width=20, height=5)
+    publish_button = tk.Button(button_frame, text="Publicar foto", command=publish, width=20, height=5, font = fuente)
     publish_button.pack(side=tk.LEFT, padx=20)
 
-    cancel_button = tk.Button(button_frame, text="Cancelar", command=publish_window.destroy, width=20, height=5)
+    cancel_button = tk.Button(button_frame, text="Cancelar", command=publish_window.destroy, width=20, height=5, font = fuente)
     cancel_button.pack(side=tk.RIGHT, padx=20)
 
 def publish():
@@ -109,6 +109,7 @@ def run_detection():
 
 # Configuración de la interfaz gráfica
 root = tk.Tk()
+fuente = ("ScriptogramaMarkdownJF", 45)
 access_token = 'TU_TOKEN_DE_ACCESO'
 message = '#DíadelITESO #SofIA'
 image_path = 'capture_from_webcam_2.png'
@@ -120,7 +121,7 @@ root.configure(bg='#6BA4FA')  # Fondo de color #6BA4FA
 frame = tk.Frame(root, bg='#6BA4FA')
 frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-start_button = tk.Button(frame, text="Tomar foto", command=picture, width=20, height=5)
+start_button = tk.Button(frame, text="Tomar foto", command=picture, width=20, height=5, font = fuente)
 start_button.pack(side=tk.LEFT, padx=20)
 
 # Iniciar la detección en un hilo separado
