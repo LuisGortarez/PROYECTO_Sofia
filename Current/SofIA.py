@@ -36,7 +36,6 @@ def picture():
 
 def open_publish_window(image):
     publish_window = tk.Toplevel(root)
-    publish_window.title("Publicar Imagen")
     publish_window.attributes('-fullscreen', True)
     publish_window.configure(bg='#6BA4FA')
 
@@ -69,11 +68,11 @@ def run_detection():
     cap = cv2.VideoCapture(0)
     model = YOLO('V8.pt')
     sound_paths = [
-        'C:\\Manos\\latido.mp3',
-        'C:\\Manos\\peace.mp3',
-        'C:\\Manos\\punio.mp3',
-        'C:\\Manos\\riff.mp3',
-        'C:\\Manos\\Hi.mp3'
+        'latido.mp3',
+        'peace.mp3',
+        'punio.mp3',
+        'riff.mp3',
+        'Hi.mp3'
     ]
     pygame.mixer.init()
     
@@ -85,7 +84,7 @@ def run_detection():
                 break
             img_name = "webcam_image.png"
             cv2.imwrite(img_name, frame)
-            s = 'C:\\Manos\\webcam_image.png'
+            s = 'webcam_image.png'
             results = model.predict(source=s, conf=0.33, imgsz=640)
             if results and results[0].boxes:  # Verifica si hay detecciones
                 for result in results:
