@@ -5,6 +5,7 @@ import pygame
 import threading
 import facebook
 from PIL import Image, ImageTk, ImageOps
+from Final_V3 import *
 
 
 def post_image_to_facebook(image_path, message, access_token):
@@ -91,8 +92,21 @@ def open_publish_window(image_path):
     cancel_button = tk.Button(button_frame, text="Cancelar", command=publish_window.destroy, width=20, height=5, font=fuente)
     cancel_button.pack(side=tk.RIGHT, padx=20)
 
-def publish():
-    post_image_to_facebook("capture_with_border.png", message, access_token)
+def publish(save_locally=False):
+    if save_locally:
+        # Genera un nombre único para la imagen
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        local_filename = f"local_capture_{timestamp}.png"
+        
+        # Guarda la imagen localmente
+        with open(local_filename, "wb") as local_file:
+            with open("capture_with_border.png", "rb") as original_file:
+                local_file.write(original_file.read())
+        print(f"Imagen guardada como {local_filename}")
+    else:
+        post_image_to_facebook("capture_with_border.png", message, access_token)
+
 
 def run_detection():
     cap = cv2.VideoCapture(0)
@@ -120,11 +134,13 @@ def run_detection():
                 for result in results:
                     for box in result.boxes:
                         class_num = int(box.cls[0].item())
-                        if class_num <= 5:
+                        if class_num <= 5 or class_num <= 2:
+                            
                             pygame.mixer.music.load(sound_paths[class_num])
                             pygame.mixer.music.play()
                         else:
                             print(f"Clase fuera de rango: {class_num}")
+                        shape_detected(class_num)
             else:
                 pygame.mixer.music.stop()
 
@@ -138,6 +154,7 @@ def run_detection():
 
 root = tk.Tk()
 fuente = ("Modern No. 20", 45)
+save_locally = True
 access_token = 'TU_TOKEN_DE_ACCESO'
 message = '#DíadelITESO #SofIA'
 image_path = 'capture_from_webcam_2.png'
