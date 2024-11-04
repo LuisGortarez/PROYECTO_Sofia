@@ -5,7 +5,7 @@ import pygame
 import threading
 import facebook
 from PIL import Image, ImageTk, ImageOps
-from Final_V3 import *
+#from Final_V3 import *
 
 
 def post_image_to_facebook(image_path, message, access_token):
@@ -86,19 +86,22 @@ def open_publish_window(image_path):
     button_frame = tk.Frame(publish_window, bg='#6BA4FA')
     button_frame.pack(pady=20)
 
-    publish_button = tk.Button(button_frame, text="Publicar foto", command=publish, width=20, height=5, font=fuente)
+    def publish_and_close():
+        publish()
+        publish_window.destroy()
+
+    publish_button = tk.Button(button_frame, text="Publicar foto", command=publish_and_close, width=20, height=5, font=fuente)
     publish_button.pack(side=tk.LEFT, padx=20)
 
     cancel_button = tk.Button(button_frame, text="Cancelar", command=publish_window.destroy, width=20, height=5, font=fuente)
     cancel_button.pack(side=tk.RIGHT, padx=20)
 
-def publish():
-    save_locally = True
+def publish(save_locally=True):
     if save_locally:
         # Genera un nombre único para la imagen
         from datetime import datetime
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        local_filename = f"local_capture_{timestamp}.png"
+        local_filename = f"Dia_Iteso_{timestamp}.png"
         
         # Guarda la imagen localmente
         with open(local_filename, "wb") as local_file:
@@ -110,6 +113,7 @@ def publish():
 
 
 def run_detection():
+
     cap = cv2.VideoCapture(0)
     model = YOLO('V8.pt')
     sound_paths = [
@@ -120,7 +124,7 @@ def run_detection():
         'Hi.mp3'
     ]
     pygame.mixer.init()
-    
+    #shape_detected(reset)
     while True:
         try:
             class_num = 0
@@ -135,39 +139,63 @@ def run_detection():
                 for result in results:
                     for box in result.boxes:
                         class_num = int(box.cls[0].item())
-                        if class_num <= 5 or class_num <= 2:
-                            
-                            pygame.mixer.music.load(sound_paths[class_num])
-                            pygame.mixer.music.play()
+                        if class_num <= 5 and class_num != 2 and class_num != 1:
+                            counter = 0
+                            if class_num == 0:
+                                class_0_count += 1
+                                for _ in range(class_0_count): 
+                                    #shape_detected(0) 
+                                    pygame.mixer.music.load(sound_paths[0]) 
+                                    pygame.mixer.music.play()
+                                    cv2.waitKey(1500)
+                            else:
+                                #shape_detected(class_num)
+                                pygame.mixer.music.load(sound_paths[class_num])
+                                pygame.mixer.music.play()
                         else:
-                            print(f"Clase fuera de rango: {class_num}")
-                        shape_detected(class_num)
+                            counter = counter + 1
+                            if counter <= 3:
+                                class_num = 50 #50 es para sleep
+                                #shape_detected(class_num)
+                        
             else:
                 pygame.mixer.music.stop()
 
             cv2.waitKey(3000)
-
+            class_0_count = 0
         except Exception as e:
             print(f"Ocurrió un error: {e}")
+            #shape_detected(reset)
             pygame.mixer.music.stop()
     
     cap.release()
 
 root = tk.Tk()
-fuente = ("Modern No. 20", 45)
+counter = 0
+reset = 1000 #1000 es el valor de reset
+fuente = ("Helvetica", 45)
 access_token = 'TU_TOKEN_DE_ACCESO'
 message = '#DíadelITESO #SofIA'
 image_path = 'capture_from_webcam_2.png'
 root.title("SofIA")
 root.attributes('-fullscreen', True)
-root.configure(bg='#6BA4FA')
+# AZUL = 6BA4FA, VERDE CLARO = 45D6A1, BLANCO = FFFFFF, NEGRO = 000000, AZUL OSCURO = 002D56
+root.configure(bg='#002D56')
 
 frame = tk.Frame(root, bg='#6BA4FA')
 frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-start_button = tk.Button(frame, text="Tomar foto", command=picture, width=20, height=5, font=fuente)
+start_button = tk.Button(frame, text="Tomar foto", command=picture, width=20, height=5, font=fuente, bg="#FFFFFF", fg="#002D56")
 start_button.pack(side=tk.LEFT, padx=20)
 
-#start_detection_thread()
+# Cargar imagen para la esquina inferior izquierda 
+bottom_left_img = Image.open('Logo-ITESO.png') 
+bottom_left_img = bottom_left_img.resize((825, 168)) # Redimensiona la imagen según sea necesario 
+bottom_left_img = ImageTk.PhotoImage(bottom_left_img) 
+bottom_left_label = tk.Label(root, image=bottom_left_img, bg='#002D56') 
+bottom_left_label.image = bottom_left_img # Mantiene una referencia a la imagen para evitar que se recolecte basura 
+bottom_left_label.place(relx=0.0, rely=1.0, anchor='sw')
+
+start_detection_thread()
 
 root.mainloop()
