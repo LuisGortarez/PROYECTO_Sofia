@@ -92,7 +92,8 @@ def open_publish_window(image_path):
     cancel_button = tk.Button(button_frame, text="Cancelar", command=publish_window.destroy, width=20, height=5, font=fuente)
     cancel_button.pack(side=tk.RIGHT, padx=20)
 
-def publish(save_locally=False):
+def publish():
+    save_locally = True
     if save_locally:
         # Genera un nombre único para la imagen
         from datetime import datetime
@@ -154,7 +155,6 @@ def run_detection():
 
 root = tk.Tk()
 fuente = ("Modern No. 20", 45)
-save_locally = True
 access_token = 'TU_TOKEN_DE_ACCESO'
 message = '#DíadelITESO #SofIA'
 image_path = 'capture_from_webcam_2.png'
