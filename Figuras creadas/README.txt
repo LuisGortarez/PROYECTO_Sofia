@@ -1,0 +1,1 @@
+These images show all the possible figures one can do with the project. The green colored hexagons represent the tiles that will be moved to make the figure. The gray colored hexagons represent the tiles that will remain static.
