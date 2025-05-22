@@ -399,8 +399,8 @@ def display_manual_screen():
     canvas.create_window(EXIT_BUTTON_X_ORIGIN, EXIT_BUTTON_Y_ORIGIN, window=exit_button)
 
     # Create reset button on canvas
-    mode_button = tk.Button(canvas, text="Click aquí para\nreiniciar", command=reset_manual_screen, bg=RESET_BUTTON_COLOR, width=RESET_BUTTON_WIDTH, height=RESET_BUTTON_HEIGHT, font=(FONT_TYPE, FONT_SIZE))
-    canvas.create_window(RESET_BUTTON_X_ORIGIN, RESET_BUTTON_Y_ORIGIN, window=mode_button)
+    reset_button = tk.Button(canvas, text="Click aquí para\nreiniciar", command=reset_manual_screen, bg=RESET_BUTTON_COLOR, width=RESET_BUTTON_WIDTH, height=RESET_BUTTON_HEIGHT, font=(FONT_TYPE, FONT_SIZE))
+    canvas.create_window(RESET_BUTTON_X_ORIGIN, RESET_BUTTON_Y_ORIGIN, window=reset_button)
 
     # Create mode button on canvas
     mode_button = tk.Button(canvas, text="Cambiar a modo\ncaptura", command=change_mode, bg=MODE_BUTTON_COLOR, width=MODE_BUTTON_WIDTH, height=MODE_BUTTON_HEIGHT, font=(FONT_TYPE, FONT_SIZE))

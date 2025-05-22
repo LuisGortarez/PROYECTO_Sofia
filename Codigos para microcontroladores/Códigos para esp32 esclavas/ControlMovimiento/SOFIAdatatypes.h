@@ -279,6 +279,10 @@ static art_t g_art_q4[TILES_PER_ESP] = {
                                         {{233, driver_14, channel_12}}, {{234, driver_14, channel_13}}, {{235, driver_14, channel_14}}, {{236, driver_14, channel_15}}, {{237, driver_15, channel_12}}, {{238, driver_15, channel_13}}, {{239, driver_15, channel_15}}, {{NO_ID, driver_15, channel_14}},
                                         };
 
+/////////////////////////////////////
+//// Global variables and arrays ////
+/////////////////////////////////////
+
 // Array with direction for positioning tile in manual mode
 static uint8_t tile_direction[N_ROWS*N_COLUMNS] = {
                                                     MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, 
@@ -298,10 +302,6 @@ static uint8_t tile_direction[N_ROWS*N_COLUMNS] = {
                                                     MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, 
                                                     MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, MID_DEGREE, 
                                                     };
-
-/////////////////////////////////////
-//// Global variables and arrays ////
-/////////////////////////////////////
 
 // Array with offset degree values for positioning servos in perfect degree 0 (0s without sign indicate no connection in system)
 static const int8_t g_servo_degree_offset[N_ROWS*N_COLUMNS] = {
@@ -335,7 +335,7 @@ static driver_found_t g_drivers_found = {false};
 void SetQuadrants();
 void Column_Move(columns_t column, uint8_t degree);
 void Row_Move(rows_t row, uint8_t degree);
-void Manual_Move(uint16_t tile_to_move, uint8_t degree);
+void Manual_Move(uint16_t tile_to_move);
 void ResetTiles();
 void PCA_ServoMove(uint8_t tile_id, drivers_t driver, channels_t channel, uint8_t degree);
 

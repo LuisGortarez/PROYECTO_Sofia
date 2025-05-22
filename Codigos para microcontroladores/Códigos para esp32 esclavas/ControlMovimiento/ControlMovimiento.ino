@@ -48,7 +48,7 @@ void setup()
 
   // Verify which drivers are connected to ESP
   g_drivers_found.driver_0_found = pca9685_0.begin();
-  if(g_drivers_found.driver_0_found)     // If a driver is found, set the drivers frequency
+  if(g_drivers_found.driver_0_found)     // If a driver is found, set the drivers frequency.
     pca9685_0.setPWMFreq(PWM_FREQUENCY); // Attempting to control a driver whose frequency hasn´t been set will cause constant rebooting
   g_drivers_found.driver_1_found = pca9685_1.begin();
   if(g_drivers_found.driver_1_found)
@@ -174,7 +174,7 @@ void loop()
 // ------------------- Code functions ------------------ //
 // ----------------------------------------------------- //
 
-// Decide which figue to show in piece based on shape command received
+// Decide which figure to show in piece based on shape command received
 void ChangeMode(uint8_t command)
 {
   if(RESET_CMD == command)
